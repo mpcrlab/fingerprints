@@ -118,23 +118,18 @@ for i =1:size(fingerprint_names,2)
     
     for j=1:M%length(f1) % for each image
         
-        a1=f1{j};
-        
+        a1=f1{j};  
         b1=im2double(imread(a1));
-       
-        
         b1=b1(1:end)';
-        
         b1 = b1 - min(b1(:));
         b1 = b1 / max(b1(:));
        
         D=[D b1];
-        
         finger_names_key=[finger_names_key i];
         
     end
     
-%     D = bsxfun(@minus,D,mean(D)); %remove mean
+%   D = bsxfun(@minus,D,mean(D)); %remove mean
     fX = fft(fft(D,[],2),[],3); %fourier transform of the images
     spectr = sqrt(mean(abs(fX).^2)); %Mean spectrum
     D = ifft(ifft(bsxfun(@times,fX,1./spectr),[],2),[],3); %whitened L
